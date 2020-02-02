@@ -38,7 +38,7 @@ ADDED from /home/berk/Android/Projects/flapbee/android/AndroidManifest.xml:5:5-2
 activity#com.berkd.flapbee.AndroidLauncher
 ADDED from /home/berk/Android/Projects/flapbee/android/AndroidManifest.xml:12:9-21:20
 	android:screenOrientation
-		ADDED from /home/berk/Android/Projects/flapbee/android/AndroidManifest.xml:15:13-50
+		ADDED from /home/berk/Android/Projects/flapbee/android/AndroidManifest.xml:15:13-49
 	android:label
 		ADDED from /home/berk/Android/Projects/flapbee/android/AndroidManifest.xml:14:13-45
 	android:configChanges
