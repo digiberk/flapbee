@@ -1,0 +1,4 @@
+#Sun Feb 02 15:42:02 AEDT 2020
+base.0=/home/berk/Android/Projects/flapbee/android/build/intermediates/dex/debug/mergeDexDebug/out
+path.0=classes.dex
+renamed.0=classes.dex
