@@ -2,9 +2,15 @@ package com.berkd.flapbee;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
+
+import java.util.Random;
 
 
 /** FLAPBEE
@@ -19,87 +25,48 @@ public class Flapbee extends ApplicationAdapter {
 
 	Texture[] birds;
 	int flapState = 0;
-	float birdY = 0; // y - coordinate position
+	float birdY = 0;
 	float velocity = 0;
-	float gravity = 1;
 
-	int gameState = 0; // keep track of the game state
+	int gameState = 0;
+	float gravity = 2;
 
+	Texture topTube;
+	Texture bottomTube;
+	float gap = 400;
+	float maxTubeOffset;
+	Random randomGenerator;
+	float tubeVelocity = 4;
+	int numberOfTubes = 4;
+	float[] tubeX = new float[numberOfTubes];
+	float[] tubeOffset = new float[numberOfTubes];
+	float distanceBetweenTubes;
 
 
 	@Override
-	public void create () {
+	public void create() {
 		batch = new SpriteBatch();
-		background = new Texture("bg.png"); // the background initialisation
+		background = new Texture("bg.png");
 
-        // Create an array for varying graphics
-        birds = new Texture[2];
+		birds = new Texture[2];
 		birds[0] = new Texture("bird.png");
 		birds[1] = new Texture("bird2.png");
-		birdY = Gdx.graphics.getHeight() /2 - (birds[0].getHeight() / 2); // centered bird Y
-	}
+		birdY = Gdx.graphics.getHeight() / 2 - birds[0].getHeight() / 2;
 
-	@Override
-	public void render () {
+		topTube = new Texture("toptube.png");
+		bottomTube = new Texture("bottomtube.png");
+		maxTubeOffset = Gdx.graphics.getHeight() / 2 - gap / 2 - 100;
+		randomGenerator = new Random();
+		distanceBetweenTubes = Gdx.graphics.getWidth() * 3 / 4;
 
+		for (int i = 0; i < numberOfTubes; i++) {
 
+			tubeOffset[i] = (randomGenerator.nextFloat() - 0.5f) * (Gdx.graphics.getHeight() - gap - 200);
 
-		// User taps on the screen, change the game state to "1" and send a log
-		if (Gdx.input.justTouched()) {
-			Gdx.app.log("Touched", "Yep!");
-			gameState = 1;
+			tubeX[i] = Gdx.graphics.getWidth() / 2 - topTube.getWidth() / 2 + i * distanceBetweenTubes;
+
 		}
 
-
-		// When the user taps on the screen, proceed to run game!
-		/** GAMESTATES
-
-		 * gamestate = 0
-		 	* home, default screen
-
-		 * gamestate = 1
-		 	* sprite moves, the game is now running
-
-		 * gamestate = 2
-			 * crashed or hit something
-			 * display final score and high score
-			 * give option to go to "home state 0" or "back to state 1"
-
-		 */
-		if (gameState != 0) {
-
-			// BIRD MOVES UP
-			if (Gdx.input.justTouched()) {
-				velocity = -30;
-			}
-
-			// If bird falls to y = 0 OR if we give it a tap
-			if ((birdY > 0) || (velocity < 0)) {
-				velocity = velocity + gravity;
-				birdY -= velocity;
-			}
-
-
-
-		} else {
-			if (Gdx.input.justTouched()) {
-				gameState = 1;
-			}
-		}
-
-		// Alternate between different flaps
-		if (flapState == 0) {
-			flapState = 1;
-		} else {
-			flapState = 0;
-		}
-
-		batch.begin();
-		batch.draw(background, 0, 0,
-				Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		batch.draw(birds[flapState],Gdx.graphics.getWidth()/2 - (birds[flapState].getWidth() /2),
-				birdY); // subtraction is for centering it
-		batch.end();
 
 	}
 }
